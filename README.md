@@ -33,6 +33,10 @@ docker-compose build && docker-compose up -d
 #### Выполните миграции в БД
 
 ```sh
+python manaage.py makemigrations event_app
+python manage.py migrate event_app
+python manage.py makemigrations userapp
+python manage.py migrate userapp
 python manage.py migrate
 ```
 

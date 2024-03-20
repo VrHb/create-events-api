@@ -27,8 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'phonenumber_field',
 
-    'event_app'
+    'event_app',
+    'userapp',
 ]
 
 MIDDLEWARE = [
@@ -107,3 +109,5 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_CHARSET = 'utf-8'
+
+AUTH_USER_MODEL = 'userapp.User'
