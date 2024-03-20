@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
+from django.utils.html import format_html
+
 from .models import Organization, Event
 
 
@@ -9,4 +10,13 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    pass
+
+    readonly_fields = ('preview_image', )
+    fields = ['preview_image', 'image', 'title', 'description', 'date']
+
+    def preview_image(self, model):
+        return format_html(
+            '<img src={} height={}/>',
+            model.image.url,
+            '200px'
+        )

@@ -36,7 +36,10 @@ class Event(models.Model):
         'Описание',
         blank=True
     )
-    organizations = models.ManyToManyField(Organization)
+    organizations = models.ManyToManyField(
+            Organization,
+            related_name='Организации',
+    )
     image = models.ImageField(
         'Изображение',
         upload_to='events_images',
