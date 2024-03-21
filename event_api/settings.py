@@ -100,7 +100,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 USE_L10N = False 
 
-DATETIME_FORMAT="%Y-%m-%d%H:%M:%S"
+# DATETIME_FORMAT="%Y-%m-%d%H:%M:%S"
 
 STATIC_URL = f'/{env.str("STATIC_DIR_NAME")}/'
 
