@@ -17,7 +17,7 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'date']
 
     readonly_fields = ('preview_image', )
-    fields = ['preview_image', 'image', 'title', 'description', 'date']
+    fields = ['preview_image', 'organizations', 'image', 'title', 'description', 'date']
 
     def preview_image(self, model):
         return format_html(

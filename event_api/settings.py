@@ -4,6 +4,8 @@ from pathlib import Path
 
 from environs import Env
 
+from datetime import timedelta
+
 env = Env()
 env.read_env()
 
@@ -64,9 +66,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'event_api.wsgi.application'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_FILTER_BACKENDS': (
-    #     'django_filters.rest_framework.DjangoFilterBackend',
-    # ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -111,3 +113,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_CHARSET = 'utf-8'
 
 AUTH_USER_MODEL = 'userapp.User'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=35),
+}

@@ -38,7 +38,7 @@ class Event(models.Model):
     )
     organizations = models.ManyToManyField(
             Organization,
-            related_name='Организации',
+            related_name='events',
     )
     image = models.ImageField(
         'Изображение',
