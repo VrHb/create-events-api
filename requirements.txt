@@ -1,3 +1,4 @@
+daphne=4.1.0
 django==3.2
 environs==11.0.0
 django-filter==24.1
@@ -6,3 +7,5 @@ djangorestframework-simplejwt==5.3.1
 django-phonenumber-field==7.3.0
 phonenumbers==8.13.32
 pillow==10.2.0
+channels==4.0.0
+channels-redis==4.2.0

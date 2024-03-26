@@ -22,6 +22,8 @@ ALLOWED_HOSTS = env.list('HOSTS', ['127.0.0.1', '0.0.0.0'])
 INTERNAL_IPS = env.list('INTERNAL_IPS', ['127.0.0.1', '0.0.0.0'])
 
 INSTALLED_APPS = [
+    'daphne',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,6 +35,7 @@ INSTALLED_APPS = [
 
     'event_app',
     'userapp',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +53,7 @@ ROOT_URLCONF = 'event_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,7 +66,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'event_api.wsgi.application'
+# WSGI_APPLICATION = 'event_api.wsgi.application'
+
+ASGI_APPLICATION = "event_api.asgi.application"
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
@@ -116,4 +121,13 @@ AUTH_USER_MODEL = 'userapp.User'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=35),
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
