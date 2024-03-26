@@ -3,10 +3,12 @@ from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 
 from event_app.models import Organization
+from .managers import CustomUserManager
 
 
 class User(AbstractUser):
-    """Сотрудник организации"""
+    '''Сотрудник организации'''
+    username = None
     email = models.EmailField(
         'Электронная почта',
         unique=True
@@ -24,6 +26,8 @@ class User(AbstractUser):
         null=True,
         on_delete=models.PROTECT
     )
+
+    objects = CustomUserManager()
 
     class Meta:
         verbose_name = 'Пользователь'
