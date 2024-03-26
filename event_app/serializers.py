@@ -22,6 +22,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     organizations = OrganizationSerializer(
+        read_only=True,
         many=True
     )
     class Meta:
@@ -29,12 +30,11 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        print(validated_data)
         event = Event.objects.create(
             title=validated_data['title'],
             description=validated_data['description'],
-            organizations=validated_data['organizations'],
             date=validated_data['date']
+        # TODO add organizations field from user
         )
         event.save()
         return event
