@@ -1,8 +1,7 @@
 # Сервис для создания мероприятий
 
-## Как запустить
 
-### Переменные окружения:
+## Переменные окружения:
 
 Создайте файл `.env`:
 
@@ -22,33 +21,89 @@ echo "DJANGO_SECRET_KEY=<ключ проекта>" >> .env
 echo "STATIC_DIR_NAME=<название директории>"
 ```
 
-### Установка c помощью docker
+## Установка c помощью docker
+
+Для запуска сайта нужно установить docker, см. [доку](https://docs.docker.com/engine/install/)
 
 ```sh
-docker-compose build && docker-compose up -d
+docker-compose up --build -d
 ```
-
-### Установка вручную
-
-#### Выполните миграции в БД
 
 ```sh
-python manaage.py makemigrations event_app
-python manage.py migrate event_app
-python manage.py makemigrations userapp
-python manage.py migrate userapp
-python manage.py migrate
+docker-compose exec web -it python manage.py createsuperuser
 ```
 
-#### Установите бд REDIS
+## Как использовать сервис
+
+- Создайте пользователя
+
+Url - http://127.0.0.1:9000/register
+
+
+- Получите token 
+
+Пример запроса:
 
 ```sh
-sudo apt install redis
+curl \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data  '{"email":"value1", "password":"value2"}' \
+  http://127.0.0.1:9000/api/token/
 ```
 
-#### Запустите сервер
+- Создайте событие 
+
+Пример запроса:
 
 ```sh
-python manage.py runserver
+curl \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer <token>" \
+  --request POST \
+  --data  '{"title":"Event", "description":"some", "date": "2024-12-23"}' \
+  http://127.0.0.1:9000/event/
 ```
 
+- Создайте организацию 
+
+Пример запроса:
+
+```sh
+curl \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer <token>" \
+  --request POST \
+  --data  '{"title":"Event", "description":"some", "address": "Some address", "postcode": "188283"}' \
+  http://127.0.0.1:9000/organization/
+```
+
+- Информация по мероприятию 
+
+Пример запроса:
+
+```sh
+curl \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer <token>" \
+  --request GET \
+  http://127.0.0.1:9000/event/1/
+```
+
+- Список мероприятий 
+
+Пример запроса:
+
+```sh
+curl \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer <token>" \
+  --request GET \
+  http://127.0.0.1:9000/events/
+```
+
+Доступные параметры:
+
+- `search` - поиск по дате, названию и описанию мероприятия
+- `ordeting=date` - сортировка по дате проведения
+- `page` - пагинация по 5 мероприятий
